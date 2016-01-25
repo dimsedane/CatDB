@@ -51,6 +51,13 @@
     "**.vspscc"
   ],
   "scripts": {
+      "postrestore": [
+          "bower install",
+          "npm install"
+      ],
+      "postbuild": [
+        "gulp build"  
+      ],
     "prepublish": [
       "npm install",
       "bower install",

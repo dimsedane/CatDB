@@ -1,40 +1,60 @@
 /// <binding Clean='clean' />
 "use strict";
 var gulp = require("gulp"),
-  rimraf = require("rimraf"),
-  concat = require("gulp-concat"),
-  cssmin = require("gulp-cssmin"),
-  uglify = require("gulp-uglify"),
-  project = require("./project.json");
+    gplugs = require("gulp-load-plugins")(),
+    rimraf = require("rimraf"),
+    concat = require("gulp-concat"),
+    cssmin = require("gulp-cssmin"),
+    uglify = require("gulp-uglify"),
+    tsLintConfig = require('./tslint.json'),
+    project = require("./project.json"),
+    tsProject = gplugs.typescript.createProject('tsconfig.json');
 
 var paths = {
   webroot: "./wwwroot/"
 };
 
-paths.js = paths.webroot + "js/**/*.js";
-paths.minJs = paths.webroot + "js/**/*.min.js";
+paths.ts = paths.webroot + "app/**/*.ts";
+paths.tsDest = paths.webroot + "app/**/*.js";
 paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
+paths.angular2Libs = [
+    "node_modules/angular2/bundles/angular2-polyfills.js",
+    "node_modules/systemjs/dist/system.src.js",
+    "node_modules/rxjs/bundles/Rx.js",
+    "node_modules/angular2/bundles/angular2.dev.js"
+]
 
-gulp.task("clean:js", function(cb) {
-  rimraf(paths.concatJsDest, cb);
+gulp.task("compile:ts", ["lint:ts"], function(){
+    var tsResult = tsProject.src()
+        .pipe(gplugs.typescript(tsProject));
+    
+    return tsResult.js.pipe(gulp.dest('.')); 
 });
+
+gulp.task("compile", ["compile:ts"]);
+
+gulp.task("lint:ts", function() {
+    return gulp.src(paths.ts)
+               .pipe(gplugs.tslint({configuration: tsLintConfig}))
+               .pipe(gplugs.tslint.report('verbose'));
+});
+
+gulp.task("clean:ts", function(cb) {
+    rimraf(paths.tsDest, cb);
+})
 
 gulp.task("clean:css", function(cb) {
-  rimraf(paths.concatCssDest, cb);
+    rimraf(paths.concatCssDest, cb);
 });
 
-gulp.task("clean", ["clean:js", "clean:css"]);
+gulp.task("clean", ["clean:css", "clean:ts"]);
 
-gulp.task("min:js", function() {
-  gulp.src([paths.js, "!" + paths.minJs], {
-      base: "."
-    })
-    .pipe(concat(paths.concatJsDest))
-    .pipe(uglify())
-    .pipe(gulp.dest("."));
+gulp.task("concat:lib",  function() {
+   return gulp.src(paths.angular2Libs)
+              .pipe(gplugs.concat("lib.js"))
+              .pipe(gulp.dest(paths.webroot + "lib")) 
 });
 
 gulp.task("min:css", function() {
@@ -44,4 +64,6 @@ gulp.task("min:css", function() {
     .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "min:css"]);
+gulp.task("min", ["min:css"]);
+
+gulp.task("build", ["concat:lib", "min", "compile"]);
