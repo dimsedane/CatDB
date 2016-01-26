@@ -20,8 +20,8 @@ paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
 paths.angular2Libs = [
-    "node_modules/angular2/bundles/angular2-polyfills.js",
     "node_modules/systemjs/dist/system.src.js",
+    "node_modules/angular2/bundles/angular2-polyfills.js",
     "node_modules/rxjs/bundles/Rx.js",
     "node_modules/angular2/bundles/angular2.dev.js"
 ]

@@ -92,13 +92,25 @@ namespace CatsDB
 
             app.UseIdentity();
 
+            app.UseFacebookAuthentication(options =>
+            {
+                options.AppId = Configuration["Authentication:Facebook:AppId"];
+                options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "home",
+                    template: "{action=Index}",
+                    defaults: new { controller = "Home" }
+                );
+                
+                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action=Index}/{id?}");
             });
         }
 

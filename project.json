@@ -7,7 +7,6 @@
   "tooling": {
     "defaultNamespace": "CatsDB"
   },
-
   "dependencies": {
     "EntityFramework.Commands": "7.0.0-rc1-final",
     "EntityFramework.SQLite": "7.0.0-rc1-final",
@@ -21,26 +20,25 @@
     "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
     "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
     "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
-    "Microsoft.Dnx.Runtime":"1.0.0-rc1-final",
+    "Microsoft.Dnx.Runtime": "1.0.0-rc1-final",
     "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.FileProviderExtensions" : "1.0.0-rc1-final",
+    "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
     "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final"
+    "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
+    "microsoft.aspnet.authentication.google": "1.0.0-rc1-final",
+    "microsoft.aspnet.authentication.facebook": "1.0.0-rc1-final"
   },
-
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel",
     "ef": "EntityFramework.Commands"
   },
-
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": {},
+    "dnxcore50": {}
   },
-
   "exclude": [
     "wwwroot",
     "node_modules",
@@ -51,13 +49,13 @@
     "**.vspscc"
   ],
   "scripts": {
-      "postrestore": [
-          "bower install",
-          "npm install"
-      ],
-      "postbuild": [
-        "gulp build"  
-      ],
+    "postrestore": [
+      "bower install",
+      "npm install"
+    ],
+    "postbuild": [
+      "gulp build"
+    ],
     "prepublish": [
       "npm install",
       "bower install",
