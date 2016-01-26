@@ -14,15 +14,8 @@ namespace CatsDB.Controllers
             if(User.Identity.IsAuthenticated) {
                 return View();
             } else {
-                return View("splash");
+                return View("Splash");
             }
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
         }
 
         public IActionResult Error()
