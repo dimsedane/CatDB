@@ -12,9 +12,9 @@ namespace CatsDB.Controllers
         public IActionResult Index()
         {
             if(User.Identity.IsAuthenticated) {
-                return View("Feed");
-            } else {
                 return View();
+            } else {
+                return View("splash");
             }
         }
 
