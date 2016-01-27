@@ -1,24 +1,29 @@
 @{
-    ViewData["Title"] = "Feed";
+    Layout = null;
 }
 
-@section scripts {
-    <script>
-        System.config({
-            defaultExtension: 'js',
-            packages: {        
-                app: {
-                    format: 'register',
-                    defaultExtension: 'js'
+<!doctype html>
+<html lang="">
+    @await Html.PartialAsync("_head")
+    <body>
+        <cats-db></cats-db>
+
+        @await Html.PartialAsync("_layoutScripts")
+        <script>
+            System.config({
+                defaultExtension: 'js',
+                packages: {        
+                    app: {
+                        format: 'register',
+                        defaultExtension: 'js'
+                    }
                 }
-            }
-        });
-        
-        System.import('../app/bootstrap')
-                .then(null, console.error.bind(console));
-    </script>
-}
+            });
+            
+            System.import('../app/bootstrap')
+                    .then(null, console.error.bind(console));
+        </script>
+    </body>
+</html>
 
-<my-app></my-app>
-
-<p>Use this area to provide additional information.</p>
+<router-outlet></router-outlet>
